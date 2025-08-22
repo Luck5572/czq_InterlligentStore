@@ -1,8 +1,0 @@
-{
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "https://smart-shop.itheima.net/index.php?s=/api/:splat"
-    }
-  ]
-}
