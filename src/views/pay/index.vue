@@ -2,32 +2,6 @@
   <div class="pay">
     <van-nav-bar fixed title="订单结算台" left-arrow @click-left="$router.go(-1)" />
 
-    <!-- 地址相关 -->
-    <div class="address">
-
-      <div class="left-icon">
-        <van-icon name="logistics" />
-      </div>
-
-      <div class="info" v-if="selectedAddress.address_id">
-        <div class="info-content">
-          <span class="name">{{ selectedAddress.name }}</span>
-          <span class="mobile">{{ selectedAddress.phone }}</span>
-        </div>
-        <div class="info-address">
-          {{ longAddress }}
-        </div>
-      </div>
-
-      <div class="info" v-else>
-        请选择配送地址
-      </div>
-
-      <div class="right-icon">
-        <van-icon name="arrow" />
-      </div>
-    </div>
-
     <!-- 订单明细 -->
     <div class="pay-list" v-if="order.goodsList">
       <div class="list">
@@ -65,8 +39,7 @@
 
         <div class="pay-cell">
           <span>配送费用：</span>
-          <span v-if="!selectedAddress">请先选择配送地址</span>
-          <span v-else class="red">+￥0.00</span>
+          <span class="red">+￥0.00</span>
         </div>
       </div>
 
@@ -75,7 +48,6 @@
         <span class="tit">支付方式</span>
         <div class="pay-cell">
           <span><van-icon name="balance-o" />余额支付（可用 ¥ {{ personal.balance }} 元）</span>
-          <!-- <span>请先选择配送地址</span> -->
           <span class="red"><van-icon name="passed" /></span>
         </div>
       </div>
@@ -95,28 +67,21 @@
 </template>
 
 <script>
-import { getAddressList } from '@/api/address'
-import { checkOrder, submitOrder } from '@/api/order'
+
+import { checkOrder } from '@/api/order'
 import loginConfirm from '@/mixins/loginConfirm'
 export default {
   name: 'PayIndex',
   mixins: [loginConfirm],
   data () {
     return {
-      addressList: [],
       order: {},
       personal: {},
       remark: '' // 备注留言
     }
   },
   computed: {
-    selectedAddress () {
-      return this.addressList[0] || {}
-    },
-    longAddress () {
-      const region = this.selectedAddress.region
-      return region.province + region.city + region.region + this.selectedAddress.detail
-    },
+
     mode () {
       return this.$route.query.mode
     },
@@ -134,32 +99,25 @@ export default {
     }
   },
   created () {
-    this.getAddressList()
     this.getOrderList()
   },
   methods: {
     async submitOrder () {
-      if (this.mode === 'cart') {
-        await submitOrder(this.mode, {
-          cartIds: this.cartIds,
-          remark: this.remark
-        })
-      }
-      if (this.mode === 'buyNow') {
-        await submitOrder(this.mode, {
-          goodsId: this.goodsId,
-          goodsSkuId: this.goodsSkuId,
-          goodsNum: this.goodsNum,
-          remark: this.remark
-        })
-      }
-      this.$toast.success('支付成功')
-      this.$router.replace('/myorder')
+      this.$toast.success('提交订单成功')
+      // 延迟跳转到购物车页面
+      setTimeout(() => {
+        if (this.mode === 'cart') {
+          try {
+            // 删除已结算的订单
+            this.$store.dispatch('cart/delSelect')
+          } catch (error) {
+            console.error('删除购物车商品失败:', error)
+          }
+        }
+        this.$router.push('/cart')
+      }, 1000)
     },
-    async getAddressList () {
-      const { data: { list } } = await getAddressList()
-      this.addressList = list
-    },
+
     async getOrderList () {
       // 购物车结算
       if (this.mode === 'cart') {
@@ -192,26 +150,6 @@ export default {
     .van-nav-bar__arrow {
       color: #333;
     }
-  }
-}
-.address {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 20px;
-  font-size: 14px;
-  color: #666;
-  position: relative;
-  background: url(@/assets/border-line.png) bottom repeat-x;
-  background-size: 60px auto;
-  .left-icon {
-    margin-right: 20px;
-  }
-  .right-icon {
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-7px);
   }
 }
 .goods-item {

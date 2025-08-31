@@ -158,8 +158,8 @@ export default {
       const { data: { detail } } = await getProDetail(this.goodsId)
       this.detail = detail
       this.images = detail.goods_images
-      console.log(this.images)
     },
+
     async getComments () {
       const { data: { list, total } } = await getProComments(this.goodsId, 3)
       this.commentList = list
@@ -203,6 +203,7 @@ export default {
 <style lang="less" scoped>
 .prodetail {
   padding-top: 46px;
+
   ::v-deep .van-icon-arrow-left {
     color: #333;
   }

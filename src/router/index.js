@@ -7,12 +7,10 @@ import SearchList from '@/views/search/list'
 import ProDetail from '@/views/prodetail'
 import Pay from '@/views/pay'
 import MyOrder from '@/views/myorder'
-
 import Home from '@/views/layout/home'
 import Category from '@/views/layout/category'
 import Cart from '@/views/layout/cart'
 import User from '@/views/layout/user'
-
 import store from '@/store'
 
 Vue.use(VueRouter)
@@ -33,7 +31,6 @@ const router = new VueRouter({
     },
     { path: '/search', component: Search },
     { path: '/searchlist', component: SearchList },
-
     { path: '/prodetail/:id', component: ProDetail },
     { path: '/pay', component: Pay },
     { path: '/myorder', component: MyOrder }

@@ -9,7 +9,6 @@ export default {
     }
   },
   mutations: {
-
     setCartList (state, newList) {
       state.cartList = newList
     },

@@ -17,10 +17,10 @@ export default {
   },
   actions: {
     logout (context) {
-      // 个人信息要重置
+      // 个人信息重置
       context.commit('setUserInfo', {})
 
-      // 购物车信息要重置 (跨模块调用 mutation)  cart/setCartList
+      // 购物车信息重置
       context.commit('cart/setCartList', [], { root: true })
     }
   },

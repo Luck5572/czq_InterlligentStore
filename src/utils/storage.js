@@ -1,4 +1,4 @@
-// 约定一个通用的键名
+
 const INFO_KEY = 'hm_shopping_info'
 const HISTORY_KEY = 'hm_history_list'
 

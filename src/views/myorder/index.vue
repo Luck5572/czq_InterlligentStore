@@ -15,12 +15,12 @@
 </template>
 
 <script>
-import OrderListItem from '@/components/OrderListItem.vue'
+
 import { getMyOrderList } from '@/api/order'
 export default {
   name: 'OrderPage',
   components: {
-    OrderListItem
+
   },
   data () {
     return {

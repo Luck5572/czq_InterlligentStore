@@ -5,7 +5,7 @@ import { Toast } from 'vant'
 const instance = axios.create({
   baseURL: 'https://smart-shop.itheima.net/index.php?s=/api',
   timeout: 4000,
-  Header: { platform: 'h5' }
+  headers: { platform: 'H5' }
 
 })
 

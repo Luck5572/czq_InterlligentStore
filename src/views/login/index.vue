@@ -31,7 +31,6 @@
 
 <script>
 import { codeLogin, getMsgCode, getPicCode } from '@/api/login'
-// import { Toast } from 'vant'
 
 export default {
   name: 'LoginPage',
@@ -73,7 +72,6 @@ export default {
     // 获取短信验证码
     async getCode () {
       if (!this.validFn()) {
-        // 如果没通过校验，没必要往下走了
         return
       }
 
@@ -88,8 +86,8 @@ export default {
 
           if (this.second <= 0) {
             clearInterval(this.timer)
-            this.timer = null // 重置定时器 id
-            this.second = this.totalSecond // 归位
+            this.timer = null
+            this.second = this.totalSecond
           }
         }, 1000)
       }
@@ -116,7 +114,7 @@ export default {
       this.$router.replace(url)
     }
   },
-  // 离开页面清除定时器
+
   destroyed () {
     clearInterval(this.timer)
   }
